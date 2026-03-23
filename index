@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blockchain Demo</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+
+<body>
+
+<h1>⛓️ Blockchain Demo</h1>
+
+<div class="blockchain-container">
+
+{% for block in chain %}
+<div class="block">
+
+    <h3>Block {{ block.index }}</h3>
+
+    <p><strong>Timestamp:</strong> {{ block.timestamp }}</p>
+
+    <p><strong>Data:</strong>
+        <input type="text" value="{{ block.data }}">
+    </p>
+
+    <p><strong>Nonce:</strong> 
+        <span id="nonce-{{ loop.index0 }}">{{ block.nonce }}</span>
+    </p>
+
+    <p><strong>Previous Hash:</strong> 
+        {{ block.previous_hash }}
+    </p>
+
+    <p><strong>Hash:</strong>
+        <span id="hash-{{ loop.index0 }}">{{ block.hash }}</span>
+    </p>
+
+    <button onclick="mine({{ loop.index0 }})">Mine</button>
+
+</div>
+{% endfor %}
+
+</div>
+
+<script>
+async function mine(index) {
+    const res = await fetch("/mine/" + index);
+    const data = await res.json();
+
+    document.getElementById("hash-" + index).innerText = data.hash;
+    document.getElementById("nonce-" + index).innerText = data.nonce;
+}
+</script>
+
+</body>
+</html>
