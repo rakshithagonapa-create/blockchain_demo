@@ -3,7 +3,7 @@ This is a simple blockchain simulation project using Python Flask.
 
 Features
 
-Live hash update
+Live hash updatex
 Block mining
 Chain validation
 Interactive UI
